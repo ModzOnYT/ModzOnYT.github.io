@@ -1,0 +1,62 @@
+body {
+	font-family: "Roboto", sans-serif;
+	font-size: 20px;
+	color: #fff;
+	margin: 0;
+	text-shadow: 1px 1px 1px #000;
+}
+
+#banner {
+	width: 100%;
+	background-size: cover;
+	background-attachment: fixed;
+	color: #fff;
+	overflow: hidden;
+}
+
+#dbutton {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	margin-left: -60px;
+	width: 120px;
+	font-size: 22px;
+	background: #fff;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
+	padding: 20px;
+	text-align: center;
+}
+
+#dbutton h2 {
+	margin: 0;
+	color: #fff;
+	cursor: default;
+}
+
+.container {
+	width: 1000px;
+	margin: 44px auto 0 auto;
+	padding-bottom: 44px;
+	border-bottom: 1px solid #ddd;
+}
+
+a, a:visited {
+	color: #fff;
+}
+
+table {
+	border: none;
+	margin: 0;
+	width: 100%;
+	border-spacing: 0;
+}
+
+thead {
+	background: #b6acac;
+	font-weight: bold;
+}
+
+td {
+	padding: 16px 10px;
+}

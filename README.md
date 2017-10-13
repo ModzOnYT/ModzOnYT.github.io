@@ -1,2 +1,2 @@
-# ModzOnYT.github.io
+# modzdev.github.io
 GitHub pages site

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>structures/CommandHandler.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandDatabase.html">CommandDatabase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModzClient.html#botLogin">botLogin</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">structures/CommandHandler.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const discord = require("discord.js");
+const logger = require("./Logger");
+const { stripIndents } = require("common-tags");
+/** The command handler for the client */
+class CommandHandler {
+  /**
+   * @param {ModzClient} client - The client this command handler is for
+   * @param {CommandDatabase} commandDatabase - The commands the handler will use
+   */
+  constructor(client, commandDatabase) {
+    /**
+     * The client this command handler is for
+     * @name CommandHandler#client
+     * @type {ModzClient}
+     * @readonly
+     */
+    Object.defineProperty(this, "client", { value: client });
+
+    /**
+     * The command collection the handler uses
+     * @type {Collection}
+     */
+    this.commandDatabase = commandDatabase;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * Handle a new message or a message update
+   * @param {Message} msg - The message to handle
+   * @return {Promise&lt;void>}
+   * @private
+   */
+  async handleCommand(msg) {
+    // Logging
+    if (this.client.options.logging
+        &amp;&amp; (msg.mentions.users.first() || msg.mentions.roles.first() || msg.mentions.everyone)
+        &amp;&amp; (msg.mentions.users.has(this.client.user.id) || msg.mentions.everyone)) { this.handleLogging(msg); }
+
+    // Check if it should handle the message if it doesn't contain a ClientUser mention
+    if (!this.shouldHandleCommand(msg)) return;
+
+    // Shortcut to the prefix
+    let prefix = this.client.commandPrefix; // eslint-disable-line prefer-destructuring
+
+    // Get the arguments from the message
+    const args = this.constructor.createParams(msg);
+
+    // Get the command from the message
+    const command = this.constructor.getCommand(msg, prefix);
+
+    // Check if the command exists in the commands collection
+    let cmd;
+    if (this.client.commandDatabase.commands.has(command)) {
+      cmd = this.client.commandDatabase.commands.get(command);
+    } else if (this.client.commandDatabase.aliases.has(command)) {
+      cmd = this.client.commandDatabase.commands.get(this.client.aliases.get(command));
+    }
+    if (cmd) {
+      try {
+        /**
+        * Emitted when running a command
+        * @event ModzClient#commandRun
+        * @param {Command} command - Command that is being run
+        * @param {Message} message - Command message that the command is running from
+        * @param {Object|string|string[]} args - Arguments for the command
+        */
+        this.client.emit("commandRun", cmd, msg, args);
+        await cmd.run(msg, args, prefix);
+      } catch (error) {
+        /**
+        * Emitted when an error occurs while running a command
+        * @event ModzClient#commandError
+        * @param {Error} error - The occurred error
+        * @param {Command} command - Command that is being run
+        * @param {Message} message - Command message that the command is running from
+        * @param {Object|string|string[]} args - Arguments for the command
+        */
+        this.client.emit("commandError", error, cmd, msg, args);
+      }
+    }
+  }
+  /**
+   * Check whether a message should be handled
+   * @param {Message} msg - The message to handle
+   * @return {boolean}
+   * @private
+   */
+  shouldHandleCommand(msg) {
+    if (msg.author.bot) return false;
+    if (this.client.options.selfbot &amp;&amp; msg.author.id !== this.client.user.id) return false;
+    if (!msg.content.startsWith(this.client.commandPrefix)) return false;
+
+    return true;
+  }
+  /**
+   * Handles mention logging
+   * @param {Message} msg - The message to handle
+   * @private
+   */
+  handleLogging(msg) {
+    this.client.channels.get(this.client.options.logchannel)
+      .send(new discord.MessageEmbed()
+        .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL())
+        .setTitle(`Mentioned in ${msg.guild.name} (${msg.guild.id})`)
+        .setDescription(msg.content)
+        .setTimestamp(new Date())
+      )
+      .catch(err => logger.error(`[DISCORD] ${err}`));
+    logger.info(stripIndents`
+        Mentioned by: ${msg.author.tag} (${msg.author.id})
+        Server: ${msg.guild.name} (${msg.guild.id}) 
+        Message content: (${msg.content})
+    `);
+  }
+  /**
+   * Gets the arguments from a command message
+   * @param {Message} message - The message to handle
+   * @return {string[]}
+   * @private
+   */
+  static createParams(message) {
+    const params = message.content.split(" ").slice(1);
+    return params;
+  }
+  /**
+   * Gets the command from a message
+   * @param {Message} message - The message to handle
+   * @param {string} prefix - The client's prefix
+   * @return {string}
+   * @private
+   */
+  static getCommand(message, prefix) {
+    const command = message.content.split(" ")[0].slice(prefix.length).toLowerCase();
+    return command;
+  }
+}
+
+module.exports = CommandHandler;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 18 2017 16:07:43 GMT+0200 (W. Europe Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

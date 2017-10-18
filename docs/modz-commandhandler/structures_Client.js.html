@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>structures/Client.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandDatabase.html">CommandDatabase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModzClient.html#botLogin">botLogin</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">structures/Client.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const discord = require("discord.js");
+const logger = require("./Logger");
+const CommandHandler = require("./CommandHandler");
+const CommandDatabase = require("./CommandDatabase");
+const { stripIndents, oneLine } = require("common-tags");
+
+/**
+ * Discord.js command handler made by myself
+ * @extends {Client}
+ */
+class ModzClient extends discord.Client {
+  /**
+   * Options for a Client
+   * @typedef {ModzClientOptions} ModzClientOptions
+   * @property {string} [owner] - The owner of the client
+   * @property {string} [prefix] - The prefix used for the client
+   * @property {boolean} [selfbot=false] - Whether the client is in selfbot mode
+   * @property {boolean} [logging=false] - Whether the client should log mentions
+   * @property {string} [logchannel] - The channel to log mentions in, if the option logging is enabled
+   */
+
+  /**
+   * @param {ModzClientOptions} [options] - Options for the client
+   */
+  constructor(options) {
+    if (typeof options.owner === "undefined") throw new Error("A bot owner must be provided");
+    if (typeof options.prefix === "undefined") throw new Error("A prefix must be provided");
+    if (typeof options.selfbot === "undefined") options.selfbot = false;
+    if (typeof options.logging === "undefined") options.logging = false;
+    if (options.logging &amp;&amp; typeof options.logchannel === "undefined") throw new Error("A logging channel must be provided.");
+
+    super(options);
+
+    /**
+     * The command database of the client
+     * @type {Collection}
+     */
+    this.commandDatabase = new CommandDatabase(this);
+
+    /**
+     * The command handler
+     * @type {CommandHandler}
+     */
+    this.handler = new CommandHandler(this, this.commandDatabase);
+
+    /**
+     * The command prefix
+     * @type {string}
+     */
+    this.commandPrefix = options.prefix;
+
+    /**
+     * The client owner
+     * @type {string}
+     */
+    this.owner = options.owner;
+
+    if (options.logging) {
+      this.once("ready", () => {
+        // Check if the logging channel exists
+        if (!this.channels.has(this.options.logchannel)) {
+          throw new TypeError("The supplied logging channel is an invalid channel or does not exist.");
+        }
+      });
+    }
+
+    if (options.owner) {
+      this.once("ready", () => {
+        this.users.fetch(options.owner).catch(err => {
+          this.emit("warn", `Unable to fetch owner ${options.owner}.`);
+          this.emit("error", err);
+        });
+      });
+    }
+
+    // Error event
+    this.on("error", err => {
+      logger.error(`[DISCORD]: ${err.stack}`);
+    });
+
+    // Warn event
+    this.on("warn", info => {
+      logger.warn(`[DISCORD]: ${info}`);
+    });
+
+    // Emitted when a command is run
+    this.on("commandRun", (cmd, msg, args) => {
+      logger.info(
+        oneLine`[DISCORD] 
+        >> Command run: ${cmd} 
+        >> Guild: ${msg.guild} 
+        >> Message author: ${msg.author.tag} 
+        >> Arguments: ${args.join(", ")}
+        >> Content: ${msg.content.slice(this.commandPrefix.length).toLowerCase()}`);
+    });
+
+    // Emitted when a command errors while running
+    this.on("commandError", (err, cmd) => {
+      logger.error(stripIndents`
+        [DISCORD] Error in command ${cmd}: 
+        ${err.stack}
+      `);
+    });
+
+    // Handle the messages
+    this.on("message", msg => {
+      this.handler.handleCommand(msg);
+    });
+  }
+  /**
+   * Logs the client in.
+   * &lt;info>You can also login with the normal &lt;Client>.login(), but using
+   * this will automatically handle the rejected promise after a failed login,
+   * instead of having to handle the rejected promise manually.&lt;/info>
+   * @param {string} token - The token used for the client
+   * @example
+   * client.botLogin("this is a token!");
+   */
+  botLogin(token) {
+    this.login(token)
+      .then(() => logger.info(`[DISCORD] Logged in successfully as ${this.user.tag}`))
+      .catch(err => {
+        this.emit("warn", `Failed to login: ${err}`);
+        return this.destroy();
+      });
+  }
+}
+
+module.exports = ModzClient;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 18 2017 16:07:43 GMT+0200 (W. Europe Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

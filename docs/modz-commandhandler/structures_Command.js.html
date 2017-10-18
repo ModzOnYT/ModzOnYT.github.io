@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>structures/Command.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandDatabase.html">CommandDatabase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModzClient.html#botLogin">botLogin</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">structures/Command.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/** A command that can be run */
+class Command {
+  /**
+   * @typedef {Object} CommandInfo
+   * @property {string} name - The name of the command (must be lowercase)
+   * @property {string[]} [aliases] - Alternative names for the command (all must be lowercase)
+   * @property {string} group - The ID of the group the command belongs to (must be lowercase)
+   * @property {string} description - A short description of the command
+   */
+
+  /**
+   * @param {ModzClient} client - The client the command is for
+   * @param {CommandInfo} info - The command information
+   */
+  constructor(client, info) {
+    this.constructor.validateInfo(client, info);
+
+    /**
+     * The client this command is for
+     * @name Command#client
+     */
+    Object.defineProperty(this, "client", { value: client });
+
+    // Command name
+    /**
+     * Name of this command
+     * @type {string}
+     */
+    this.name = info.name;
+
+    // Command aliases
+    /**
+     * Aliases for the command
+     * @type {string[]}
+     */
+    this.aliases = info.aliases;
+
+    // Command group
+    /**
+     * Group this command belongs to
+     * @type {string}
+     */
+    this.group = info.group;
+
+    // Command description
+    /**
+     * Description for the command
+     * @type {string}
+     */
+    this.description = info.description;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * Runs the command
+   * @param {Message} message - The message the command is being run for
+   * @param {string[]} args - The arguments for the command
+   * @return {Promise&lt;?Message|?Array&lt;Message>>}
+   * @abstract
+   */
+  async run(message, args) { // eslint-disable-line no-unused-vars, require-await
+    throw new Error(`${this.constructor.name} doesn't have a run() method.`);
+  }
+  /**
+   * Validates the constructor parameters
+   * @param {ModzClient} client - Client to validate
+   * @param {CommandInfo} info - Info to validate
+   * @private
+   */
+  static validateInfo(client, info) {
+    if (!client) throw new Error("A client must be specified.");
+    if (typeof info !== "object") throw new TypeError("Command info must be an Object.");
+    if (typeof info.name !== "string") throw new TypeError("Command name must be a string.");
+    if (info.name !== info.name.toLowerCase()) throw new Error("Command name must be lowercase.");
+    if (typeof info.description !== "string") throw new TypeError("Command description must be a string.");
+    if (info.aliases &amp;&amp; (!Array.isArray(info.aliases) || info.aliases.some(ali => typeof ali !== "string"))) {
+      throw new TypeError("Command aliases must be an Array of strings.");
+    }
+    if (info.aliases &amp;&amp; info.aliases.some(ali => ali !== ali.toLowerCase())) {
+      throw new Error("Command aliases must be lowercase.");
+    }
+    if (typeof info.group !== "string") throw new TypeError("group name must be a string.");
+  }
+}
+
+module.exports = Command;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 18 2017 16:07:43 GMT+0200 (W. Europe Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>structures/CommandDatabase.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandDatabase.html">CommandDatabase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModzClient.html#botLogin">botLogin</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">structures/CommandDatabase.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { info } = require("./Logger");
+const Command = require("./Command");
+const { Collection } = require("discord.js");
+/** Handles the loading of commands */
+class CommandDatabase {
+  /** @param {ModzClient} [client] - Client to use  */
+  constructor(client) {
+    /**
+     * The client the loader is serving
+     * @name CommandDatabase#Client
+     * @type {ModzClient}
+     * @readonly
+     */
+    Object.defineProperty(this, "client", { value: client });
+
+    /**
+     * The loaded commands
+     * @type {Collection&lt;string, Command>}
+     */
+    this.commands = new Collection();
+
+    /**
+     * The loaded aliases
+     * @type {Collection&lt;string, Command>}
+     */
+    this.aliases = new Collection();
+
+    /**
+     * The path to the commands
+     * @type {?string}
+     */
+    this.commandsPath = null;
+  }
+  /**
+   * Loads a single command
+   * @param {Command|Function} command - Either a Command instance, or a constructor for one
+   * @return {CommandDatabase}
+   * @see {@link CommandDatabase#loadCommands}
+   */
+  loadCommand(command) {
+    return this.loadCommands([command]);
+  }
+  /**
+   * Loads multiple commands
+   * @param {Command[]|Function[]} commands - An array of Command instances, or constructors
+   * @return {CommandDatabase}
+   */
+  loadCommands(commands) {
+    if (!Array.isArray(commands)) throw new TypeError("Commands must be an Array.");
+    for (let command of commands) {
+      if (typeof command === "function") command = new command(this.client); // eslint-disable-line new-cap
+
+      // Verify that it's an actual command
+      if (!(command instanceof Command)) {
+        this.client.emit("warn", `Attempting to register an invalid command object: ${command}; skipping.`);
+        continue;
+      }
+
+      // Make sure there aren't any conflicts
+      if (this.commands.some(cmd => cmd.name === command.name || cmd.aliases.includes(command.name))) {
+        throw new Error(`A command with the name/alias "${command.name}" is already registered.`);
+      }
+      for (const alias of command.aliases) {
+        if (this.commands.some(cmd => cmd.name === alias || cmd.aliases.includes(alias))) {
+          throw new Error(`A command with the name/alias "${alias}" is already registered.`);
+        }
+      }
+
+      // Add the command
+      this.commands.set(command.name, command);
+      info(`[DISCORD] Loading command ${command.name}...`);
+      command.aliases.forEach(alias => { // eslint-disable-line max-nested-callbacks
+        this.aliases.set(alias, command.name);
+      });
+      /**
+       * Emitted when a command is loaded
+       * @event ModzClient#commandLoad
+       * @param {Command} command - Command that was loaded
+       */
+      this.client.emit("commandLoad", command);
+    }
+    return this;
+  }
+  /**
+   * Loads all commands in a directory. The files must export a Command class constructor or instance.
+   * @param {string|RequireAllOptions} options - The path to the directory, or a require-all options object
+   * @return {CommandDatabase}
+   */
+  loadCommandsIn(options) {
+    const obj = require("require-all")(options);
+    const commands = [];
+    for (const group of Object.values(obj)) {
+      for (let command of Object.values(group)) {
+        if (typeof command.default === "function") command = command.default;
+        commands.push(command);
+      }
+    }
+    return this.loadCommands(commands);
+  }
+  /**
+   * Loads the default commands
+   * @param {Object} [options] - The object to specify which commands not to register
+   * @param {boolean} [options.eval_=true] - Whether or not to load the built-in `eval` command
+   * @param {boolean} [options.exec=true] - Whether or not to load the built-in `exec` command
+   * @param {boolean} [options.help=true] - Whether or not to load the built-in `help` command
+   * @param {boolean} [options.ping=true] - Whether or not to load the built-in `ping` command
+   * @param {boolean} [options.stats=true] - Whether or not to load the built-in `stats` command
+   * @return {CommandDatabase}
+   */
+  loadDefaultCommands({ eval_ = true, exec = true, help = true, ping = true, stats = true }) {
+    if (eval_) this.loadCommand(require("../commands/util/eval"));
+    if (exec) this.loadCommand(require("../commands/util/exec"));
+    if (help) this.loadCommand(require("../commands/util/help"));
+    if (ping) this.loadCommand(require("../commands/util/ping"));
+    if (stats) this.loadCommand(require("../commands/util/stats"));
+
+    return this;
+  }
+}
+
+module.exports = CommandDatabase;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 18 2017 16:07:43 GMT+0200 (W. Europe Summer Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

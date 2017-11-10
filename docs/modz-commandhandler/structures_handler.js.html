@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>ClientOptions - Documentation</title>
+    <title>structures/handler.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,105 +29,155 @@
 
 <div id="main">
     
-    <h1 class="page-title">ClientOptions</h1>
+    <h1 class="page-title">structures/handler.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        ClientOptions
-        </h2>
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const discord = require("discord.js");
+const logger = require("./Logger");
+const { stripIndents } = require("common-tags");
+/** The command handler for the client */
+class CommandHandler {
+  /**
+   * @param {ModzClient} client - The client this command handler is for
+   * @param {CommandDatabase} commandDatabase - The commands the handler will use
+   */
+  constructor(client, commandDatabase) {
+    /**
+     * The client this command handler is for
+     * @name CommandHandler#client
+     * @type {ModzClient}
+     * @readonly
+     */
+    Object.defineProperty(this, "client", { value: client });
 
-<article>
-    <div class="container-overview">
-    
-        
+    /**
+     * The command collection the handler uses
+     * @type {Collection}
+     */
+    this.commandDatabase = commandDatabase;
+  }
+  // eslint-disable-next-line valid-jsdoc
+  /**
+   * Handle a new message or a message update
+   * @param {Message} msg - The message to handle
+   * @return {Promise&lt;void>}
+   * @private
+   */
+  async handleCommand(msg) {
+    // Logging
+    if (this.client.options.logging
+        &amp;&amp; (msg.mentions.users.first() || msg.mentions.roles.first() || msg.mentions.everyone)
+        &amp;&amp; (msg.mentions.users.has(this.client.user.id) || msg.mentions.everyone)) { this.handleLogging(msg); }
 
-        
+    // Check if it should handle the message if it doesn't contain a ClientUser mention
+    if (!this.shouldHandleCommand(msg)) return;
 
+    // Shortcut to the prefix
+    let prefix = this.client.commandPrefix; // eslint-disable-line prefer-destructuring
 
-<dl class="details">
+    // Get the arguments from the message
+    const args = this.constructor.createParams(msg);
 
-    
+    // Get the command from the message
+    const command = this.constructor.getCommand(msg, prefix);
 
-    
+    // Check if the command exists in the commands collection
+    let cmd;
+    if (this.client.loader.commands.has(command)) {
+      cmd = this.client.loader.commands.get(command);
+    } else if (this.client.loader.aliases.has(command)) {
+      cmd = this.client.loader.commands.get(this.client.loader.aliases.get(command));
+    }
+    if (cmd) {
+      try {
+        /**
+        * Emitted when running a command
+        * @event ModzClient#commandRun
+        * @param {Command} command - Command that is being run
+        * @param {Message} message - Command message that the command is running from
+        * @param {Object|string|string[]} args - Arguments for the command
+        */
+        this.client.emit("commandRun", cmd, msg, args);
+        await cmd.run(msg, args, prefix);
+      } catch (error) {
+        /**
+        * Emitted when an error occurs while running a command
+        * @event ModzClient#commandError
+        * @param {Error} error - The occurred error
+        * @param {Command} command - Command that is being run
+        * @param {Message} message - Command message that the command is running from
+        * @param {Object|string|string[]} args - Arguments for the command
+        */
+        this.client.emit("commandError", error, cmd, msg, args);
+      }
+    }
+  }
+  /**
+   * Check whether a message should be handled
+   * @param {Message} msg - The message to handle
+   * @return {boolean}
+   * @private
+   */
+  shouldHandleCommand(msg) {
+    if (msg.author.bot) return false;
+    if (this.client.options.selfbot &amp;&amp; msg.author.id !== this.client.user.id) return false;
+    if (!msg.content.startsWith(this.client.commandPrefix)) return false;
 
-    
+    return true;
+  }
+  /**
+   * Handles mention logging
+   * @param {Message} msg - The message to handle
+   * @private
+   */
+  handleLogging(msg) {
+    this.client.channels.get(this.client.options.logchannel)
+      .send(new discord.MessageEmbed()
+        .setAuthor(`${msg.author.tag} (${msg.author.id})`, msg.author.displayAvatarURL())
+        .setTitle(`Mentioned in ${msg.guild.name} (${msg.guild.id})`)
+        .setDescription(msg.content)
+        .setTimestamp(new Date())
+      )
+      .catch(err => logger.error(`[DISCORD] ${err}`));
+    logger.info(stripIndents`
+        Mentioned by: ${msg.author.tag} (${msg.author.id})
+        Server: ${msg.guild.name} (${msg.guild.id}) 
+        Message content: (${msg.content})
+    `);
+  }
+  /**
+   * Gets the arguments from a command message
+   * @param {Message} message - The message to handle
+   * @return {string[]}
+   * @private
+   */
+  static createParams(message) {
+    const params = message.content.split(" ").slice(1);
+    return params;
+  }
+  /**
+   * Gets the command from a message
+   * @param {Message} message - The message to handle
+   * @param {string} prefix - The client's prefix
+   * @return {string}
+   * @private
+   */
+  static getCommand(message, prefix) {
+    const command = message.content.split(" ")[0].slice(prefix.length).toLowerCase();
+    return command;
+  }
+}
 
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line14">line 14</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://discord.js.org/#/docs/main/master/typedef/ClientOptions">https://discord.js.org/#/docs/main/master/typedef/ClientOptions</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+module.exports = CommandHandler;</code></pre>
+        </article>
+    </section>
 
 
 

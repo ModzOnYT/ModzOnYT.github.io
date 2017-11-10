@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>CommandDatabase - Documentation</title>
+    <title>CommandLoader - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -24,12 +24,12 @@
 <label for="nav-trigger" class="overlay"></label>
 
 <nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#reload">reload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandDatabase.html">CommandDatabase</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#findCommands">findCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandDatabase.html#resolveCommandPath">resolveCommandPath</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="ModzClient.html#botLogin">botLogin</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandReload">commandReload</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Command.html">Command</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#reload">reload</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Command.html#run">run</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandHandler.html">CommandHandler</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="CommandLoader.html">CommandLoader</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#findCommands">findCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#loadCommand">loadCommand</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#loadCommands">loadCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#loadCommandsIn">loadCommandsIn</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#loadDefaultCommands">loadDefaultCommands</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="CommandLoader.html#resolveCommandPath">resolveCommandPath</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="ModzClient.html">ModzClient</a></span></li><li class="nav-heading">Externals</li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Client.html">Client</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-ClientOptions.html">ClientOptions</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Collection.html">Collection</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-Message.html">Message</a></span></li><li class="nav-heading"><span class="nav-item-type type-external">E</span><span class="nav-item-name"><a href="external-RequireAllOptions.html">RequireAllOptions</a></span></li><li class="nav-heading">Events</li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandError">commandError</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandLoad">commandLoad</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandReload">commandReload</a></span></li><li class="nav-heading"><span class="nav-item-type type-event">E</span><span class="nav-item-name"><a href="ModzClient.html#event:commandRun">commandRun</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#error">error</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#info">info</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#log">log</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#warn">warn</a></span></li>
 </nav>
 
 <div id="main">
     
-    <h1 class="page-title">CommandDatabase</h1>
+    <h1 class="page-title">CommandLoader</h1>
     
 
     
@@ -42,7 +42,7 @@
 <header>
     
         <h2>
-        CommandDatabase
+        CommandLoader
         </h2>
         
             <div class="class-description">Handles the loading of commands</div>
@@ -60,7 +60,7 @@
     <h2>Constructor</h2>
     
 
-    <h4 class="name" id="CommandDatabase"><span class="type-signature"></span>new CommandDatabase<span class="signature">(client<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="CommandLoader"><span class="type-signature"></span>new CommandLoader<span class="signature">(client<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
 
     
 
@@ -99,7 +99,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line6">line 6</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line6">line 6</a>
     </li></ul></dd>
     
 
@@ -258,7 +258,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line27">line 27</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -332,7 +332,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line9">line 9</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line9">line 9</a>
     </li></ul></dd>
     
 
@@ -406,7 +406,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line21">line 21</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -480,7 +480,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line33">line 33</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -554,7 +554,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line39">line 39</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -638,7 +638,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line157">line 157</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line157">line 157</a>
     </li></ul></dd>
     
 
@@ -817,7 +817,7 @@
 
     
 
-    <h4 class="name" id="loadCommand"><span class="type-signature"></span>loadCommand<span class="signature">(command)</span><span class="type-signature"> &rarr; {<a href="CommandDatabase.html">CommandDatabase</a>}</span></h4>
+    <h4 class="name" id="loadCommand"><span class="type-signature"></span>loadCommand<span class="signature">(command)</span><span class="type-signature"> &rarr; {<a href="CommandLoader.html">CommandLoader</a>}</span></h4>
 
     
 
@@ -860,7 +860,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line47">line 47</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -870,7 +870,7 @@
     <dt class="tag-see">See:</dt>
     <dd class="tag-see">
         <ul>
-            <li><a href="CommandDatabase.html#loadCommands">CommandDatabase#loadCommands</a></li>
+            <li><a href="CommandLoader.html#loadCommands">CommandLoader#loadCommands</a></li>
         </ul>
     </dd>
     
@@ -964,7 +964,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><code><a href="CommandDatabase.html">CommandDatabase</a></code></span>
+<span class="param-type"><code><a href="CommandLoader.html">CommandLoader</a></code></span>
 
 
     </dd>
@@ -983,7 +983,7 @@
 
     
 
-    <h4 class="name" id="loadCommands"><span class="type-signature"></span>loadCommands<span class="signature">(commands)</span><span class="type-signature"> &rarr; {<a href="CommandDatabase.html">CommandDatabase</a>}</span></h4>
+    <h4 class="name" id="loadCommands"><span class="type-signature"></span>loadCommands<span class="signature">(commands)</span><span class="type-signature"> &rarr; {<a href="CommandLoader.html">CommandLoader</a>}</span></h4>
 
     
 
@@ -1026,7 +1026,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line55">line 55</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -1123,7 +1123,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><code><a href="CommandDatabase.html">CommandDatabase</a></code></span>
+<span class="param-type"><code><a href="CommandLoader.html">CommandLoader</a></code></span>
 
 
     </dd>
@@ -1142,7 +1142,7 @@
 
     
 
-    <h4 class="name" id="loadCommandsIn"><span class="type-signature"></span>loadCommandsIn<span class="signature">(options)</span><span class="type-signature"> &rarr; {<a href="CommandDatabase.html">CommandDatabase</a>}</span></h4>
+    <h4 class="name" id="loadCommandsIn"><span class="type-signature"></span>loadCommandsIn<span class="signature">(options)</span><span class="type-signature"> &rarr; {<a href="CommandLoader.html">CommandLoader</a>}</span></h4>
 
     
 
@@ -1185,7 +1185,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line96">line 96</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -1282,7 +1282,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><code><a href="CommandDatabase.html">CommandDatabase</a></code></span>
+<span class="param-type"><code><a href="CommandLoader.html">CommandLoader</a></code></span>
 
 
     </dd>
@@ -1301,7 +1301,7 @@
 
     
 
-    <h4 class="name" id="loadDefaultCommands"><span class="type-signature"></span>loadDefaultCommands<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="CommandDatabase.html">CommandDatabase</a>}</span></h4>
+    <h4 class="name" id="loadDefaultCommands"><span class="type-signature"></span>loadDefaultCommands<span class="signature">(options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="CommandLoader.html">CommandLoader</a>}</span></h4>
 
     
 
@@ -1344,7 +1344,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line118">line 118</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -1689,7 +1689,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><code><a href="CommandDatabase.html">CommandDatabase</a></code></span>
+<span class="param-type"><code><a href="CommandLoader.html">CommandLoader</a></code></span>
 
 
     </dd>
@@ -1751,7 +1751,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="structures_CommandDatabase.js.html">structures/CommandDatabase.js</a>, <a href="structures_CommandDatabase.js.html#line134">line 134</a>
+        <a href="structures_loader.js.html">structures/loader.js</a>, <a href="structures_loader.js.html#line134">line 134</a>
     </li></ul></dd>
     
 
@@ -1906,7 +1906,7 @@
 <br class="clear">
 
 <footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Oct 20 2017 21:39:18 GMT+0200 (W. Europe Summer Time) using the Minami theme.
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Fri Nov 10 2017 16:31:53 GMT+0100 (W. Europe Standard Time) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
